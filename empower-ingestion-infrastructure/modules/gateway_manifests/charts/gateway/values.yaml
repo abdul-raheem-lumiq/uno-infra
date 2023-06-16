@@ -1,0 +1,52 @@
+gateway:
+  name: empower-ingestion-gateway
+  httpPort: 80
+  httpsPort: 443
+  tls:
+    credentialName: tls-secret
+    mode: SIMPLE
+
+#secret:
+#  name: test-tls
+#  namespace: ingestion-app
+#  data:
+#    tls.crt: ./certificate.crt
+#    tls.key: ./pkey.key
+
+virtualService:
+  name: keycloak
+  gateway: empower-ingestion-gateway
+  host: '*'
+  uriPrefix: '/auth/'
+  uriPrefixWithoutSlash: '/auth'
+  urirewrite: '/auth/'
+  destination:
+    host: keycloak
+    port: 80
+virtualService1:
+  name: empoweringestionbackend
+  gateway: empower-ingestion-gateway
+  host: '*'
+  uriPrefix: '/ingestion/'
+  uriPrefixWithoutSlash: '/ingestion'
+  destination:
+    host: empoweringestionbackend
+    port: 80
+virtualService2:
+  name: empoweringestionfrontend
+  gateway: empower-ingestion-gateway
+  host: '*'
+  uriPrefix: '/'
+  uriPrefixWithoutSlash: '/'
+  destination:
+    host: empoweringestionfrontend
+    port: 80
+virtualService3:
+  name: empoweringestionconnectionservice
+  gateway: empower-ingestion-gateway
+  host: '*'
+  uriPrefix: '/connectionservice/'
+  uriPrefixWithoutSlash: '/connectionservice'
+  destination:
+    host: empoweringestionconnectionservice
+    port: 80

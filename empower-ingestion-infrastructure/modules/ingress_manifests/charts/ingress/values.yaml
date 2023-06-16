@@ -1,0 +1,5 @@
+host: {}
+certificate_arn: arn:aws:acm:ap-south-1:660061364911:certificate/ecc5acb8-ac02-48eb-903e-057efec061e5
+backendservice: istio-ingress
+subnets: "subnet-03fc40e8f2c87cb10,subnet-0e00434f6bceffa21"
+alb_name: empower-foundation-ingestion-ingress-alb

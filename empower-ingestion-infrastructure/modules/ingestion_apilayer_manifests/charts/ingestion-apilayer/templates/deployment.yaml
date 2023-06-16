@@ -1,0 +1,55 @@
+{{- $deployment := .Values.deployment -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name }}
+  replicas: {{ .Values.deployment.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.name }}
+    spec:
+      containers:
+      - name: {{ .Values.deployment.name }}
+        image: {{ .Values.deployment.image }}
+        env:
+        - name: PORT
+          value: {{ .Values.deployment.env.port | quote }}
+        - name: HOST
+          value: {{ .Values.deployment.env.host | quote }}
+        - name: DATABASE_TYPE
+          value: {{ .Values.deployment.env.databasetype }}
+        - name: DATABASE_HOST
+          value: {{ .Values.deployment.env.databasehost }}
+        - name: DATABASE_PORT
+          value: {{ .Values.deployment.env.databaseport | quote }}
+        - name: DATABASE_USER
+          value: {{ .Values.deployment.env.databaseuser }}
+        - name: DATABASE_PASSWORD
+          value: {{ .Values.deployment.env.databasepassword }}
+        - name: DATABASE_NAME
+          value: {{ .Values.deployment.env.databasename }}
+        - name: AIRFLOW_USER
+          value: {{ .Values.deployment.env.airflowuser }}
+        - name: AIRFLOW_PASSWORD
+          value: {{ .Values.deployment.env.airflowpassword }}
+        - name: AIRFLOW_HOST
+          value: {{ .Values.deployment.env.airflowhost }}
+        - name: AIRFLOW_PORT
+          value: {{ .Values.deployment.env.airflowport | quote }}
+        - name: AWS_REGION
+          value: {{ .Values.deployment.env.awsregion }}
+        - name: AWS_BUCKET_NAME
+          value: {{ .Values.deployment.env.awsbucketname }}
+        - name: AWS_BUCKET_NAME_MOUNT
+          value: {{ .Values.deployment.env.awsbucketnamemount }}
+        ports:
+        - containerPort: {{ .Values.deployment.containerPort }}
+        resources:
+          requests:
+            cpu: {{ .Values.deployment.cpu }}
+

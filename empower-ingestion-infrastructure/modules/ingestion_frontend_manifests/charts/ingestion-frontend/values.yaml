@@ -1,0 +1,20 @@
+deployment:
+  name: empoweringestionfrontend
+  replicas: 1
+  image: 660061364911.dkr.ecr.ap-south-1.amazonaws.com/empower-foundation-ingestion-frontend:32
+  containerPort: 3000
+  cpu: 300m
+  env:
+    viteapiurl: my-secret-api-key-devel
+    vitebaseurl: http://afdc28bdbdf16407788e4764f29d8447-7e1621d8a5ccec79.elb.ap-south-1.amazonaws.com
+    viteconnectionurl: http://a76c539a7ae144ce695dd6bf0d9a584a-b737aa7236751511.elb.ap-south-1.amazonaws.com
+service:
+  servicetype: ClusterIP
+  name: empoweringestionfrontend
+  annotations:
+    #service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    #service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    #service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    #service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-03fc40e8f2c87cb10,subnet-0e00434f6bceffa21
+  port: 80
+  targetPort: 3000

@@ -1,0 +1,32 @@
+deployment:
+  name: empoweringestionapilayer
+  replicas: 1
+  image: 660061364911.dkr.ecr.ap-south-1.amazonaws.com/empower-foundation-ingestion-apilayer:24
+  containerPort: 6100
+  cpu: 300m
+  env:
+    port: "6100"
+    host: "0.0.0.0"
+    databasetype: postgres
+    databasehost: pryzm-db.cepsv5f9ayrr.ap-south-1.rds.amazonaws.com
+    databaseport: "25432"
+    databaseuser: postgres
+    databasepassword: lumiq123
+    databasename: empower_foundation_app_db
+    airflowuser: admin
+    airflowpassword: admin
+    airflowhost: airflow-web.sidecar.svc.cluster.local
+    airflowport: "80"
+    awsregion: ap-south-1
+    awsbucketname: empower-foundation-artifact-bucket
+    awsbucketnamemount: empower-s3-mount
+service:
+  name: empoweringestionapilayer
+  type: ClusterIP
+  annotations:
+    #service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    #service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    #service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    #service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-03fc40e8f2c87cb10,subnet-0e00434f6bceffa21
+  port: 80
+  targetPort: 6100

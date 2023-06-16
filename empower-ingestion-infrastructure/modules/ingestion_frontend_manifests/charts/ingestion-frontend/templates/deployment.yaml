@@ -1,0 +1,31 @@
+{{- $deployment := .Values.deployment -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.name }}
+  replicas: {{ .Values.deployment.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.name }}
+    spec:
+      containers:
+      - name: {{ .Values.deployment.name }}
+        image: {{ .Values.deployment.image }}
+        env:
+          - name: VITE_API_KEY
+            value: {{ .Values.deployment.env.viteapiurl }}
+          - name: VITE_BASE_URL
+            value: {{ .Values.deployment.env.vitebaseurl }}
+          - name: VITE_CONNECTION_URL
+            value: {{ .Values.deployment.env.viteconnectionurl }}
+        ports:
+        - containerPort: {{ .Values.deployment.containerPort }}
+        resources:
+          requests:
+            cpu: {{ .Values.deployment.cpu }}
+
